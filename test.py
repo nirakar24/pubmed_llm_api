@@ -1,6 +1,6 @@
 import requests
 
-url = 'http://127.0.0.1:8000/answer/'
+url = 'https://8000-hackoversho-doctorcopil-bl0n7lgytuh.ws-us110.gitpod.io/answer/'
 data = {
     'question': 'Hi, I have a slight body pain after gym',
     'keywords': 'gym, pain, body',

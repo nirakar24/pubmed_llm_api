@@ -1,0 +1,34 @@
+<!-- chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Chat Page</h1>
+    <form action="/chat/" method="post">
+        {% csrf_token %}
+        <label for="question">Question:</label><br>
+        <input type="text" id="question" name="question"><br>
+        
+        <label for="num_results">Number of Results:</label><br>
+        <input type="number" id="num_results" name="num_results" value="30"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if question %}
+    <h2>Question: {{ question }}</h2>
+    {% endif %}
+
+    {% if answer %}
+    <h2>Answer:</h2>
+    <p>{{ answer }}</p>
+    {% endif %}
+
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>

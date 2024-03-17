@@ -3,6 +3,11 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 from groq import Groq
 import os
+from django.shortcuts import render
+from django.http import JsonResponse
+import requests
+
+
 
 api_key=os.environ["GROK_API_KEY"]="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" 
 client = Groq(api_key=api_key) 
@@ -57,3 +62,23 @@ def answer_question_with_abstracts(request):
         return JsonResponse({'answer': response.choices[0].message.content})
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=400)
+
+def chat(request):
+    if request.method == 'POST':
+        question = request.POST.get('question', '')
+        keywords = request.POST.get('keywords', '')
+        num_results = request.POST.get('num_results', 30)
+
+        # Make a request to your answer_question_with_abstracts view
+        url = 'https://8000-hackoversho-doctorcopil-bl0n7lgytuh.ws-us110.gitpod.io/answer/'  # Replace with your actual URL
+        data = {'question': question, 'keywords': keywords, 'num_results': num_results}
+        response = requests.post(url, data=data)
+
+        if response.status_code == 200:
+            answer = response.json().get('answer', '')
+            return render(request, 'chat.html', {'question': question, 'answer': answer})
+        else:
+            error_message = "Failed to get answer. Please try again."
+            return render(request, 'chat.html', {'question': question, 'error_message': error_message})
+
+    return render(request, 'chat.html')
