@@ -7,28 +7,121 @@
     <title>Chat</title>
 </head>
 <body>
-    <h1>Chat Page</h1>
-    <form action="/chat/" method="post">
-        {% csrf_token %}
-        <label for="question">Question:</label><br>
-        <input type="text" id="question" name="question"><br>
-        
-        <label for="num_results">Number of Results:</label><br>
-        <input type="number" id="num_results" name="num_results" value="30"><br><br>
-        <input type="submit" value="Submit">
-    </form>
+    <div id="root"></div>
 
-    {% if question %}
-    <h2>Question: {{ question }}</h2>
-    {% endif %}
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        const { useState } = React;
 
-    {% if answer %}
-    <h2>Answer:</h2>
-    <p>{{ answer }}</p>
-    {% endif %}
+        const Talk = () => {
+            const [input, setInput] = useState("");
+            const [showResults, setShowResults] = useState(false);
+            const [loading, setLoading] = useState(false);
+            const [resultData, setResultData] = useState("");
+            const [recentPrompt, setRecentPrompt] = useState("");
 
-    {% if error_message %}
-    <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
+            const handleCardClick = (promptText) => {
+                setInput(promptText);
+            };
+
+            const onSent = () => {
+                // Your logic for sending the input and receiving the result
+                // This function would typically update `loading`, `resultData`, and `recentPrompt` state
+            };
+
+            return (
+                <div className="main">
+                    <div className="nav">
+                        <p> </p>
+                        <img src="https://api.multiavatar.com/ajink-gupta.png?apikey=s9P2DAhUGyKbJO" alt="" />
+                    </div>
+                    <div className="main-container">
+                        {!showResults ? (
+                            <>
+                                <div className="greet">
+                                    <p>
+                                        <span>Hello , Doctor </span>
+                                    </p>
+                                    <p>How Can i Help You Today?</p>
+                                </div>
+                                <div className="cards">
+                                    <div
+                                        className="card"
+                                        onClick={() =>
+                                            handleCardClick("What are the recent updates ")
+                                        }
+                                    >
+                                        <p>What are the recent updates ? </p>
+                                     </div>
+                                    
+                                    <div
+                                        className="card"
+                                        onClick={() =>
+                                            handleCardClick("How to learn about new   technologies?")
+                                        }
+                                    >
+                                        <p>How to learn about new   technologies?</p>
+                                     </div>
+                                    <div
+                                        className="card"
+                                        onClick={() => {
+                                            handleCardClick(
+                                                "Who created you ? "
+                                            );
+                                        }}
+                                    >
+                                        <p>Who created you ? </p>
+                                     </div>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="result">
+                                <div className="result-title">
+                                     <p>{recentPrompt}</p>
+                                </div>
+                                <div className="result-data">
+                                    <div id="answer-container">
+        <!-- Answer will be displayed here -->
+         </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="main-bottom">
+                            <div className="search-box">
+                                <input
+                                    onChange={(e) => {
+                                        setInput(e.target.value);
+                                    }}
+                                    value={input}
+                                    type="text"
+                                    placeholder="Enter the Prompt Here"
+                                />
+                                <div>
+                                     
+                                    <img
+                                         alt=""
+                                        onClick={() => {
+                                            onSent();
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="bottom-info">
+                                <p>
+                                    Doctors Copilot may display inaccurate info, including about people, so
+                                    double-check its responses. Your privacy & Doctors Copilot Apps
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<Talk />, document.getElementById('root'));
+    </script>
 </body>
 </html>
