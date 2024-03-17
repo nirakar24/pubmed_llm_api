@@ -13,20 +13,42 @@
             <img src="https://api.multiavatar.com/ajink-gupta.png?apikey=s9P2DAhUGyKbJO" alt="">
         </div>
         <div class="main-container">
-           
+            <div class="greet">
+                <p>
+                    <span>Hello, Doctor</span>
+                </p>
+                <p>How can I help you today?</p>
+            </div>
+            <div class="cards">
+                <div class="card" onclick="handleCardClick('What are the recent updates?')">
+                    <p>What are the recent updates?</p>
+                    <img src="compass_icon.png" alt="">
+                </div>
+                <div class="card" onclick="handleCardClick('How to learn about new technologies?')">
+                    <p>How to learn about new technologies?</p>
+                    <img src="bulb_icon.png" alt="">
+                </div>
+                <div class="card" onclick="handleCardClick('Who created you?')">
+                    <p>Who created you?</p>
+                    <img src="code_icon.png" alt="">
+                </div>
+            </div>
 
-            <div class="result" id="result">
+            <div class="result" id="result" style="display: none;">
                 <div class="result-title">
-                    <img src="https://api.multiavatar.com/ajink-gupta.png?apikey=s9P2DAhUGyKbJO" alt="">
-                    <p id="recentPrompt"> Good morinig</p>
+                    <img src="user.png" alt="">
+                    <p id="recentPrompt"></p>
                 </div>
                 <div class="result-data" id="resultData">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="">
-                  
+                    <img src="gemini_icon.png" alt="">
+                    <div id="loader" class="loader" style="display: none;">
+                        <hr>
+                        <hr>
+                        <hr>
+                    </div>
                     <p id="response">
-                        <div id="answer-container">
-                            <!-- Answer will be displayed here -->
-                        </div>
+                     Doctors Copilot may display inaccurate info, including about people, so
+                        double-check its responses. Your privacy & Doctors Copilot Apps
                     </p>
                 </div>
             </div>
@@ -41,29 +63,13 @@
                 </div>
                 <div class="bottom-info">
                     <p>
-                         its responses. Your privacy & Doctors Copilo
+                        Doctors Copilot may display inaccurate info, including about people, so
+                        double-check its responses. Your privacy & Doctors Copilot Apps
                     </p>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById("question-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var formData = new FormData(this);
-            
-            fetch("{% url 'answer' %}", {  // Use Django template tag to generate relative URL
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("answer-container").innerHTML = "<strong>Answer:</strong> " + data.answer;
-            })
-            .catch(error => console.error("Error:", error));
-        });
-    </script>
 </body>
 </html>
 
